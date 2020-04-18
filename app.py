@@ -114,7 +114,7 @@ ACCESS = {
 }
 
 class User(UserMixin, db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'ksouravong_users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
@@ -255,7 +255,11 @@ def account():
 
     return render_template('account_detail.html', form=form, pageTitle='Your Account')
 
-
+# updates
+@app.route('/updates')
+@requires_access_level(ACCESS['guest'])
+def updates():
+    return render_template('updates.html', pageTitle='My Flask App Updates')
 
 ################ USER ACCESS FUNCTIONALITY OR GREATER ###################
 
@@ -265,8 +269,20 @@ def account():
 def dashboard():
     return render_template('dashboard.html', pageTitle='My Flask App Dashboard')
 
+# explore
+@app.route('/explore')
+@requires_access_level(ACCESS['user'])
+def explore():
+    return render_template('explore.html', pageTitle='My Flask App Explore')
 
 ################ ADMIN ACCESS FUNCTIONALITY ###################
+
+# security
+@app.route('/security')
+@requires_access_level(ACCESS['admin'])
+def security():
+    return render_template('security.html', pageTitle='My Flask App Security')
+
 
 # control panel
 @app.route('/control_panel')
