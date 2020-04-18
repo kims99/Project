@@ -9,16 +9,18 @@ from flask_login import LoginManager, UserMixin, current_user, login_user, logou
 from functools import wraps
 
 import pymysql
-import secrets
+#import secrets
+import os
 
 
-conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
 
-# Open database connection
-#dbhost = secrets.dbhost
-#dbuser = secrets.dbuser
-#dbpass = secrets.dbpass
-#dbname = secrets.dbname
+Open database connection
+dbhost = secrets.dbhost
+dbuser = secrets.dbuser
+dbpass = secrets.dbpass
+dbname = secrets.dbname
 
 #db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
 
