@@ -57,3 +57,33 @@ Use this template to start a new application
 12. Create and change to a new local development branch ```git checkout b development```
 
 13. Continue working with the project as you normally would.
+
+
+-- use msci3300;
+
+CREATE TABLE ksouravong_users (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    username VARCHAR(30),
+    password_hash VARCHAR(128),
+    access INT(11), register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE ksouravong_vendors (
+    vendor_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    order_date DATE NOT NULL,  
+    booth_num VARCHAR(10) NOT NULL,
+    company VARCHAR(100) NOT NULL,
+    rep VARCHAR(100) NOT NULL,
+    phone_num VARCHAR(15) NOT NULL,
+    installed_date DATE,
+    asset_num INT, 
+    service VARCHAR(100) NOT NULL, 
+    amount VARCHAR(10) NOT NULL, 
+    paid VARCHAR(5),
+    returned VARCHAR(5)
+    );
+
+INSERT INTO ksouravong_vendors (order_date, booth_num, company, rep, phone_num, installed_date, asset_num, service, amount, paid)
+VALUES ('2020-05-06', 'IA34J', 'Iowa Hawk Shop', 'Ruby Bollinger', '319-111-2222', '2020-06-30', '2341', 'DSL', '350.00', 'Yes');
