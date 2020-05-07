@@ -9,25 +9,25 @@ from flask_login import LoginManager, UserMixin, current_user, login_user, logou
 from functools import wraps
 
 import pymysql
-#import secrets
-import os
+import secrets
+#import os
 
-dbuser = os.environ.get('DBUSER')
-dbpass = os.environ.get('DBPASS')
-dbhost = os.environ.get('DBHOST')
-dbname = os.environ.get('DBNAME')
+#dbuser = os.environ.get('DBUSER')
+#dbpass = os.environ.get('DBPASS')
+#dbhost = os.environ.get('DBHOST')
+#dbname = os.environ.get('DBNAME')
 
 
-#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
-conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
+conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
 
 #Open database connection
-#dbhost = secrets.dbhost
-#dbuser = secrets.dbuser
-#dbpass = secrets.dbpass
-#dbname = secrets.dbname
+dbhost = secrets.dbhost
+dbuser = secrets.dbuser
+dbpass = secrets.dbpass
+dbname = secrets.dbname
 
-#db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
+db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
 
 app = Flask(__name__)
 
@@ -113,7 +113,6 @@ class AccountDetailForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
 
-
 ACCESS = {
     'guest': 0,
     'user': 1,
@@ -180,6 +179,36 @@ def requires_access_level(access_level):
         return decorated_function
     return decorator
 
+class ksouravong_vendors(db.Model):
+    vendor_id = db.Column(db.Integer, primary_key=True)
+    order_date = db.Column(db.String(15))
+    booth_num = db.Column(db.String(10))
+    company = db.Column(db.String(50))
+    rep = db.Column(db.String(50))
+    phone_num = db.Column(db.String(10))
+    installed_date = db.Column(db.String(15))
+    asset_num = db.Column(db.Integer)
+    service = db.Column(db.String(20))
+    amount = db.Column(db.String(10))
+    paid = db.Column(db.String(3))
+    returned = db.Column(db.String(3))
+
+    def __repr__(self):
+        return "ID: {0} | Order Date: {1} | Booth #: {2} | Company: {3} | Representative: {4} | Phone Number: {5} | Installed On: {6} | Asset #: {7} | Type of Service: {8} | Bill Amount: {9} | Paid? {10} | Returned? {11}".format(self.vendor_id, self.order_date, self.booth_num, self.company, self.rep, self.phone_num, self.installed_date, self.asset_num, self.service, self.amount, self.paid, self.returned)
+
+class VendorOrderForm(FlaskForm):
+    vendor_id = IntegerField('Vendor ID:')
+    order_date = StringField('Order Date:', validators=[DataRequired()])
+    booth_num = StringField('Booth #:', validators=[DataRequired()])
+    company = StringField('Company:', validators=[DataRequired()])
+    rep = StringField('Representative:', validators=[DataRequired()])
+    phone_num = StringField('Phone Number:', validators=[DataRequired()])
+    installed_date = StringField('Installed On:')
+    asset_num  = IntegerField('Asset #:')
+    service = StringField('Type of Service:', validators=[DataRequired()])
+    amount = StringField('Bill Amount:', validators=[DataRequired()])
+    paid = StringField('Paid?')
+    returned = StringField('Returned?')
 
 
 
@@ -189,12 +218,97 @@ def requires_access_level(access_level):
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', pageTitle='Flask App Home Page')
+    all_vendors = ksouravong_vendors.query.all()
+    return render_template('index.html', vendors=all_vendors, pageTitle='Vendor Order Information')
 
 # about
 @app.route('/about')
 def about():
-    return render_template('about.html', pageTitle='About My Flask App')
+    return render_template('about.html', pageTitle='About Iowa State Fair Database')
+
+# search
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        print('post method')
+        form = request.form
+        search_value = form['search_string']
+        search = "%{0}%".format(search_value)
+        results = ksouravong_vendors.query.filter(or_(ksouravong_vendors.vendor_id.like(search),
+                                                ksouravong_vendors.booth_num.like(search),
+                                                ksouravong_vendors.asset_num.like(search),
+                                                ksouravong_vendors.service.like(search),
+                                                ksouravong_vendors.paid.like(search),
+                                                ksouravong_vendors.returned.like(search))).all()
+        return render_template('index.html', vendors=results, pageTitle='Vendor Order', legend="Search Results")
+    else:
+        return redirect("/")
+
+# add vendor
+@app.route('/add_vendor', methods=['GET', 'POST'])
+def add_vendor():
+    form = VendorOrderForm()
+    if form.validate_on_submit():
+        vendor = ksouravong_vendors(order_date=form.order_date.data, booth_num=form.booth_num.data, company=form.company.data, rep=form.rep.data, phone_num=form.phone_num.data, installed_date=form.installed_date.data, asset_num=form.asset_num.data, service=form.service.data, amount=form.amount.data, paid=form.paid.data, returned=form.returned.data)
+        db.session.add(vendor)
+        db.session.commit()
+        return redirect('/')
+
+    return render_template('add_vendor.html', form=form, pageTitle='Add New Order')
+
+#delete vendor
+@app.route('/delete_vendor/<int:vendor_id>', methods=['GET', 'POST'])
+def delete_app(vendor_id):
+    if request.method == 'POST':
+        vendor = ksouravong_vendors.query.get_or_404(vendor_id)
+        db.session.delete(vendor)
+        db.session.commit()
+        return redirect("/")
+    else:
+        return redirect("/")
+
+#get vendor
+@app.route('/app/<int:vendor_id>', methods=['GET', 'POST'])
+def get_vendor(vendor_id):
+    vendor = ksouravong_vendors.query.get_or_404(vendor_id)
+    return render_template('vendors.html', form=app, pageTitle='Order Details', legend="Order Details")
+
+#update vendor
+@app.route('/app/<int:vendor_id>/update', methods=['GET', 'POST'])
+def update_vendor(vendor_id):
+    vendor = ksouravong_vendors.query.get_or_404(vendor_id)
+    form = VendorOrderForm()
+
+    if form.validate_on_submit():
+        app.order_date = form.order_date.data
+        app.booth_num = form.booth_num.data
+        app.company = form.company.data
+        app.rep = form.rep.data
+        app.phone_num = form.phone_num.data
+        app.installed_date = form.installed_date.data
+        app.asset_num = form.asset_num.data
+        app.service = form.service.data
+        app.amount = form.amount.data
+        app.paid = form.paid.data
+        app.returned = form.returned.data
+        db.session.commit()
+        return redirect(url_for('get_vendor', vendor_id=app.vendor_id))
+
+    form.vendor_id.data = app.vendor_id
+    form.order_date.data = app.order_date
+    form.booth_num.data = app.booth_num 
+    form.company.data = app.company 
+    form.rep.data = app.rep 
+    form.phone_num.data = app.phone_num  
+    form.installed_date.data = app.installed_date 
+    form.asset_num.data = app.asset_num  
+    form.service.data = app.service 
+    form.amount.data = app.amount 
+    form.paid.data = app.paid 
+    form.returned.data = app.returned  
+
+    return render_template('update_vendor.html', form=form, pageTitle='Update Order', legend="Update An Order")
+
 
 # registration
 @app.route('/register', methods=['GET', 'POST'])
