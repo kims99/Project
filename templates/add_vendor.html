@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+
+    <h3>Add A New Order</h3>
+    <hr />
+    
+    <form method="POST" action="{{ url_for('add_vendor') }}">
+
+        {{ form.csrf_token }}
+        {{ form.vendor_id.label }} {{ form.vendor_id(size=5) }}
+        {{ form.order_date.label }} {{ form.order_date(size=10) }}
+        {{ form.booth_num.label }} {{ form.booth_num(size=5) }}
+        {{ form.company.label }} {{ form.company(size=20) }}
+        {{ form.rep.label }} {{ form.rep(size=40) }}
+        {{ form.phone_num.label }} {{ form.phone_num(size=11) }}
+        {{ form.installed_date.label }} {{ form.installed_date(size=10) }}
+        {{ form.asset_num.label }} {{ form.asset_num(size=5) }}
+        {{ form.service.label }} {{ form.service(size=15) }}
+        {{ form.amount.label }} {{ form.amount(size=10) }}
+        {{ form.paid.label }} {{ form.paid(size=3) }}
+        {{ form.returned.label }} {{ form.returned(size=3) }}
+        
+
+        <input type="submit" value="Add New App"> 
+
+    </form>
+
+</div>
+{% endblock %}
