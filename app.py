@@ -233,6 +233,11 @@ def edit_orders():
 def about():
     return render_template('about.html', pageTitle='About Iowa State Fair Database')
 
+# contact
+@app.route('/contact')
+def contact():
+    return render_template('contact.html', pageTitle='Contact')
+
 # search
 @app.route('/search', methods=['GET', 'POST'])
 def search():
