@@ -259,6 +259,7 @@ def add_vendor():
         vendor = ksouravong_vendors(order_date=form.order_date.data, booth_num=form.booth_num.data, company=form.company.data, rep=form.rep.data, phone_num=form.phone_num.data, installed_date=form.installed_date.data, asset_num=form.asset_num.data, service=form.service.data, amount=form.amount.data, paid=form.paid.data, returned=form.returned.data)
         db.session.add(vendor)
         db.session.commit()
+        flash('Order has been successfully created.', 'success')
         return redirect('/')
 
     return render_template('add_vendor.html', form=form, pageTitle='Add New Order')
