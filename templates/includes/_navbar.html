@@ -15,16 +15,13 @@
                     <input class="form-control mr-sm-2" type="search" name="search_string" autofocus="autofocus" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" formaction="/search" type="submit">Search</button>
                 </form>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Vendor Orders</a>
-                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                 {% if current_user.is_anonymous%}
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Register</a>
                 </li>
@@ -35,6 +32,9 @@
                 {% else %}
 
                 {% if current_user.is_admin() %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Vendor Orders</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/edit_orders">Edit Orders</a>
                 </li>
