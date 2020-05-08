@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h3>{{ legend }}</h3>
+{% if vendors %}
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Vendor ID</th>
+        <th scope="col">Date</th>
+        <th scope="col">Booth #</th>
+        <th scope="col">Company</th>
+        <th scope="col">Representative</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Installed On</th>
+        <th scope="col">Asset Tag</th>
+        <th scope="col">Type of Service</th>
+        <th scope="col">Bill Amount</th>
+        <th scope="col">Paid?</th>
+        <th scope="col">Returned?</th>
+        <th scope="col">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+        {% for row in vendors %}
+        <tr>
+            <td> {{row.vendor_id}} </td>
+            <td> {{row.order_date}} </td>
+            <td> {{row.booth_num}} </td>
+            <td> {{row.company}} </td>
+            <td> {{row.rep}} </td>
+            <td> {{row.phone_num}} </td>
+            <td> {{row.installed_date}} </td>
+            <td> {{row.asset_num}} </td>
+            <td> {{row.service}} </td>
+            <td> {{row.amount}} </td>
+            <td> {{row.paid}} </td>
+            <td> {{row.returned}} </td>
+
+            <td>
+                <form action="{{ url_for('get_vendor', vendor_id=row.vendor_id) }}" method="POST">
+                        <button type="submit" class="btn btn-outline-dark">Details</button>
+                </form>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+      
+{% endif %}
+{% endblock %}

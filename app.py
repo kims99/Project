@@ -221,6 +221,13 @@ def index():
     all_vendors = ksouravong_vendors.query.all()
     return render_template('index.html', vendors=all_vendors, pageTitle='Vendor Order Information')
 
+# edit order
+@app.route('/edit_orders')
+@requires_access_level(ACCESS['admin'])
+def edit_orders():
+    all_vendors = ksouravong_vendors.query.all()
+    return render_template('edit_orders.html', vendors=all_vendors, pageTitle='Edit Order')
+
 # about
 @app.route('/about')
 def about():
@@ -258,7 +265,7 @@ def add_vendor():
 
 #delete vendor
 @app.route('/delete_vendor/<int:vendor_id>', methods=['GET', 'POST'])
-def delete_app(vendor_id):
+def delete_vendor(vendor_id):
     if request.method == 'POST':
         vendor = ksouravong_vendors.query.get_or_404(vendor_id)
         db.session.delete(vendor)
@@ -268,45 +275,45 @@ def delete_app(vendor_id):
         return redirect("/")
 
 #get vendor
-@app.route('/app/<int:vendor_id>', methods=['GET', 'POST'])
+@app.route('/vendors/<int:vendor_id>', methods=['GET', 'POST'])
+@requires_access_level(ACCESS['admin'])
 def get_vendor(vendor_id):
     vendor = ksouravong_vendors.query.get_or_404(vendor_id)
-    return render_template('vendors.html', form=app, pageTitle='Order Details', legend="Order Details")
+    return render_template('vendors.html', form=vendor, pageTitle='Order Details', legend="Order Details")
 
 #update vendor
-@app.route('/app/<int:vendor_id>/update', methods=['GET', 'POST'])
+@app.route('/vendors/<int:vendor_id>/update', methods=['GET', 'POST'])
 def update_vendor(vendor_id):
     vendor = ksouravong_vendors.query.get_or_404(vendor_id)
     form = VendorOrderForm()
 
     if form.validate_on_submit():
-        app.order_date = form.order_date.data
-        app.booth_num = form.booth_num.data
-        app.company = form.company.data
-        app.rep = form.rep.data
-        app.phone_num = form.phone_num.data
-        app.installed_date = form.installed_date.data
-        app.asset_num = form.asset_num.data
-        app.service = form.service.data
-        app.amount = form.amount.data
-        app.paid = form.paid.data
-        app.returned = form.returned.data
+        vendor.order_date = form.order_date.data
+        vendor.booth_num = form.booth_num.data
+        vendor.company = form.company.data
+        vendor.rep = form.rep.data
+        vendor.phone_num = form.phone_num.data
+        vendor.installed_date = form.installed_date.data
+        vendor.asset_num = form.asset_num.data
+        vendor.service = form.service.data
+        vendor.amount = form.amount.data
+        vendor.paid = form.paid.data
+        vendor.returned = form.returned.data
         db.session.commit()
-        return redirect(url_for('get_vendor', vendor_id=app.vendor_id))
+        return redirect(url_for('get_vendor', vendor_id=vendor.vendor_id))
 
-    form.vendor_id.data = app.vendor_id
-    form.order_date.data = app.order_date
-    form.booth_num.data = app.booth_num 
-    form.company.data = app.company 
-    form.rep.data = app.rep 
-    form.phone_num.data = app.phone_num  
-    form.installed_date.data = app.installed_date 
-    form.asset_num.data = app.asset_num  
-    form.service.data = app.service 
-    form.amount.data = app.amount 
-    form.paid.data = app.paid 
-    form.returned.data = app.returned  
-
+    form.vendor_id.data = vendor.vendor_id
+    form.order_date.data = vendor.order_date
+    form.booth_num.data = vendor.booth_num 
+    form.company.data = vendor.company 
+    form.rep.data = vendor.rep 
+    form.phone_num.data = vendor.phone_num  
+    form.installed_date.data = vendor.installed_date 
+    form.asset_num.data = vendor.asset_num  
+    form.service.data = vendor.service 
+    form.amount.data = vendor.amount 
+    form.paid.data = vendor.paid 
+    form.returned.data = vendor.returned  
     return render_template('update_vendor.html', form=form, pageTitle='Update Order', legend="Update An Order")
 
 
@@ -376,12 +383,6 @@ def account():
 
     return render_template('account_detail.html', form=form, pageTitle='Your Account')
 
-# updates
-@app.route('/updates')
-@requires_access_level(ACCESS['guest'])
-def updates():
-    return render_template('updates.html', pageTitle='My Flask App Updates')
-
 ################ USER ACCESS FUNCTIONALITY OR GREATER ###################
 
 # dashboard
@@ -397,13 +398,6 @@ def explore():
     return render_template('explore.html', pageTitle='My Flask App Explore')
 
 ################ ADMIN ACCESS FUNCTIONALITY ###################
-
-# security
-@app.route('/security')
-@requires_access_level(ACCESS['admin'])
-def security():
-    return render_template('security.html', pageTitle='My Flask App Security')
-
 
 # control panel
 @app.route('/control_panel')
