@@ -11,9 +11,9 @@
         {% if form %}
 
         <div class="form-group">
-            <label>{{ form.vendor_id.label }}</label>
-            {{ form.vendor_id(class="form-control") }}
-            {% for error in form.vendor_id.errors %}
+            <label>{{ form.id.label }}</label>
+            {{ form.id(class="form-control") }}
+            {% for error in form.id.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </div>

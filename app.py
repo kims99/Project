@@ -180,7 +180,7 @@ def requires_access_level(access_level):
     return decorator
 
 class ksouravong_vendors(db.Model):
-    vendor_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     order_date = db.Column(db.String(15))
     booth_num = db.Column(db.String(10))
     company = db.Column(db.String(50))
@@ -197,7 +197,7 @@ class ksouravong_vendors(db.Model):
         return "ID: {0} | Order Date: {1} | Booth #: {2} | Company: {3} | Representative: {4} | Phone Number: {5} | Installed On: {6} | Asset #: {7} | Type of Service: {8} | Bill Amount: {9} | Paid? {10} | Returned? {11}".format(self.vendor_id, self.order_date, self.booth_num, self.company, self.rep, self.phone_num, self.installed_date, self.asset_num, self.service, self.amount, self.paid, self.returned)
 
 class VendorOrderForm(FlaskForm):
-    vendor_id = IntegerField('Vendor ID:')
+    id = IntegerField('Order ID:')
     order_date = StringField('Order Date:', validators=[DataRequired()])
     booth_num = StringField('Booth #:', validators=[DataRequired()])
     company = StringField('Company:', validators=[DataRequired()])
@@ -241,7 +241,7 @@ def search():
         form = request.form
         search_value = form['search_string']
         search = "%{0}%".format(search_value)
-        results = ksouravong_vendors.query.filter(or_(ksouravong_vendors.vendor_id.like(search),
+        results = ksouravong_vendors.query.filter(or_(ksouravong_vendors.id.like(search),
                                                 ksouravong_vendors.booth_num.like(search),
                                                 ksouravong_vendors.asset_num.like(search),
                                                 ksouravong_vendors.service.like(search),
@@ -256,7 +256,7 @@ def search():
 def add_vendor():
     form = VendorOrderForm()
     if form.validate_on_submit():
-        vendor = ksouravong_vendors(order_date=form.order_date.data, booth_num=form.booth_num.data, company=form.company.data, rep=form.rep.data, phone_num=form.phone_num.data, installed_date=form.installed_date.data, asset_num=form.asset_num.data, service=form.service.data, amount=form.amount.data, paid=form.paid.data, returned=form.returned.data)
+        vendor = ksouravong_vendors(id=form.id.data, order_date=form.order_date.data, booth_num=form.booth_num.data, company=form.company.data, rep=form.rep.data, phone_num=form.phone_num.data, installed_date=form.installed_date.data, asset_num=form.asset_num.data, service=form.service.data, amount=form.amount.data, paid=form.paid.data, returned=form.returned.data)
         db.session.add(vendor)
         db.session.commit()
         flash('Order has been successfully created.', 'success')
@@ -265,10 +265,10 @@ def add_vendor():
     return render_template('add_vendor.html', form=form, pageTitle='Add New Order')
 
 #delete vendor
-@app.route('/delete_vendor/<int:vendor_id>', methods=['GET', 'POST'])
-def delete_vendor(vendor_id):
+@app.route('/delete_vendor/<int:id>', methods=['GET', 'POST'])
+def delete_vendor(id):
     if request.method == 'POST':
-        vendor = ksouravong_vendors.query.get_or_404(vendor_id)
+        vendor = ksouravong_vendors.query.get_or_404(id)
         db.session.delete(vendor)
         db.session.commit()
         return redirect("/")
@@ -276,19 +276,20 @@ def delete_vendor(vendor_id):
         return redirect("/")
 
 #get vendor
-@app.route('/vendors/<int:vendor_id>', methods=['GET', 'POST'])
+@app.route('/vendors/<int:id>', methods=['GET', 'POST'])
 @requires_access_level(ACCESS['admin'])
-def get_vendor(vendor_id):
-    vendor = ksouravong_vendors.query.get_or_404(vendor_id)
+def get_vendor(id):
+    vendor = ksouravong_vendors.query.get_or_404(id)
     return render_template('vendors.html', form=vendor, pageTitle='Order Details', legend="Order Details")
 
 #update vendor
-@app.route('/vendors/<int:vendor_id>/update', methods=['GET', 'POST'])
-def update_vendor(vendor_id):
-    vendor = ksouravong_vendors.query.get_or_404(vendor_id)
+@app.route('/vendors/<int:id>/update', methods=['GET', 'POST'])
+def update_vendor(id):
+    vendor = ksouravong_vendors.query.get_or_404(id)
     form = VendorOrderForm()
 
     if form.validate_on_submit():
+        vendor.id = form.id.data
         vendor.order_date = form.order_date.data
         vendor.booth_num = form.booth_num.data
         vendor.company = form.company.data
@@ -301,9 +302,9 @@ def update_vendor(vendor_id):
         vendor.paid = form.paid.data
         vendor.returned = form.returned.data
         db.session.commit()
-        return redirect(url_for('get_vendor', vendor_id=vendor.vendor_id))
+        return redirect(url_for('get_vendor', id=vendor.id))
 
-    form.vendor_id.data = vendor.vendor_id
+    form.id.data = vendor.id
     form.order_date.data = vendor.order_date
     form.booth_num.data = vendor.booth_num 
     form.company.data = vendor.company 
@@ -391,12 +392,6 @@ def account():
 @requires_access_level(ACCESS['user'])
 def dashboard():
     return render_template('dashboard.html', pageTitle='My Flask App Dashboard')
-
-# explore
-@app.route('/explore')
-@requires_access_level(ACCESS['user'])
-def explore():
-    return render_template('explore.html', pageTitle='My Flask App Explore')
 
 ################ ADMIN ACCESS FUNCTIONALITY ###################
 

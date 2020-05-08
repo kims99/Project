@@ -8,7 +8,7 @@
     <form method="POST" action="">
 
         {{ form.csrf_token }}
-        {{ form.vendor_id.label }} {{ form.vendor_id(size=5, readonly=true) }}
+        {{ form.id.label }} {{ form.id(size=5, readonly=true) }}
         {{ form.order_date.label }} {{ form.order_date(size=10) }}
         {{ form.booth_num.label }} {{ form.booth_num(size=5) }}
         {{ form.company.label }} {{ form.company(size=20) }}

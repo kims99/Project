@@ -8,7 +8,7 @@
     <form method="POST" action="">
 
         {{ form.csrf_token }}
-        {{ form.vendor_id.label }} {{ form.vendor_id }}
+        {{ form.id.label }} {{ form.id }}
         {{ form.order_date.label }} {{ form.order_date }}
         {{ form.booth_num.label }} {{ form.booth_num }}
         {{ form.company.label }} {{ form.company }}
@@ -21,8 +21,8 @@
         {{ form.paid.label }} {{ form.paid }}
         {{ form.returned.label }} {{ form.returned }}
 
-        <input type="submit" formaction="{{ url_for('update_vendor', vendor_id=form.vendor_id) }}" value="Update"> 
-        <input type="submit" formaction="{{ url_for('delete_vendor', vendor_id=form.vendor_id) }}" value="Delete"> 
+        <input type="submit" formaction="{{ url_for('update_vendor', id=form.id) }}" value="Update"> 
+        <input type="submit" formaction="{{ url_for('delete_vendor', id=form.id) }}" value="Delete"> 
     
     </form>
     {% endif %}

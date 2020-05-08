@@ -8,14 +8,18 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
-            <a class="navbar-brand" href="/">Flask App</a>
+            <a class="navbar-brand" href="/index">Iowa State Fair</a>
 
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
+                <form class="form-inline my-2 my-lg-0" method="POST">
+                    <input class="form-control mr-sm-2" type="search" name="search_string" autofocus="autofocus" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" formaction="/search" type="submit">Search</button>
+                </form>
                 <li class="nav-item">
                     <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Vendor Orders</a>
                 </li>
             </ul>
 
@@ -32,36 +36,19 @@
 
                 {% if current_user.is_admin() %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/control_panel">Control Panel</a>
+                    <a class="nav-link" href="/edit_orders">Edit Orders</a>
                 </li>
-                <li class="nev-item">
-                    <a class="nav-link" href="/security">Security</a>
-                </li>
-                {% endif %}
-
-                {% if current_user.is_admin() or current_user.is_user() %}
-                
                 <li class="nav-item">
-                    <a class="nav-link" href="/explore">Explore</a>
+                    <a class="nav-link" href="/control_panel">User Management</a>
                 </li>
-                
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                    <a class="nav-link" href="/account">Account Setting</a>
                 </li>
-                {% endif %}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/updates">Updates</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/account">Account</a>
-                </li>
-                
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
 
+                {% endif %}
                 {% endif %}
             </ul>
         </div>

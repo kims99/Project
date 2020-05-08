@@ -8,7 +8,7 @@
 <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">Vendor ID</th>
+        <th scope="col">Order ID</th>
         <th scope="col">Date</th>
         <th scope="col">Booth #</th>
         <th scope="col">Company</th>
@@ -26,7 +26,7 @@
         
         {% for row in vendors %}
         <tr>
-            <td> {{row.vendor_id}} </td>
+            <td> {{row.id}} </td>
             <td> {{row.order_date}} </td>
             <td> {{row.booth_num}} </td>
             <td> {{row.company}} </td>
