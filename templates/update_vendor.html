@@ -1,117 +1,27 @@
 {% extends 'base.html' %}
-
 {% block body %}
-<h1>Order Detail</h1>
-<hr />
-{% from "includes/_formhelpers.html" import render_field %}
 <div>
-  <form action="" method="POST" id="update_vendor">
+
+    <h3>{{ legend }}</h3>
+
+    <form method="POST" action="">
+
         {{ form.csrf_token }}
-
-        {% if form %}
-
-        <div class="form-group">
-            <label>{{ form.id.label }}</label>
-            {{ form.id(readonly=True, class="form-control")}}
-            {% for error in form.id.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.order_date.label }}</label>
-            {{ form.order_date(class="form-control") }}
-            {% for error in form.order_date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.booth_num.label }}</label>
-            {{ form.booth_num(class="form-control") }}
-            {% for error in form.booth_num.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.company.label }}</label>
-            {{ form.company(class="form-control") }}
-            {% for error in form.company.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.rep.label }}</label>
-            {{ form.rep(class="form-control") }}
-            {% for error in form.rep.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.phone_num.label }}</label>
-            {{ form.phone_num(class="form-control") }}
-            {% for error in form.phone_num.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.installed_date.label }}</label>
-            {{ form.installed_date(class="form-control") }}
-            {% for error in form.installed_date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.asset_num.label }}</label>
-            {{ form.asset_num(class="form-control") }}
-            {% for error in form.asset_num.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.service.label }}</label>
-            {{ form.service(class="form-control") }}
-            {% for error in form.service.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.amount.label }}</label>
-            {{ form.amount(class="form-control") }}
-            {% for error in form.amount.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.paid.label }}</label>
-            {{ form.paid(class="form-control") }}
-            {% for error in form.paid.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <div class="form-group">
-            <label>{{ form.returned.label }}</label>
-            {{ form.returned(class="form-control") }}
-            {% for error in form.returned.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-
-        <button type="submit" form="add_vendor" formmethod="POST" value="Save"
-        formaction="{{ url_for('add_vendor') }}" class="btn btn-primary">Save</button>
+        {{ form.id.label }} {{ form.id(size=5, readonly=true) }}
+        {{ form.order_date.label }} {{ form.order_date(size=10) }}
+        {{ form.booth_num.label }} {{ form.booth_num(size=5) }}
+        {{ form.company.label }} {{ form.company(size=20) }}
+        {{ form.rep.label }} {{ form.rep(size=40) }}
+        {{ form.phone_num.label }} {{ form.phone_num(size=11) }}
+        {{ form.installed_date.label }} {{ form.installed_date(size=10) }}
+        {{ form.asset_num.label }} {{ form.asset_num(size=5) }}
+        {{ form.service.label }} {{ form.service(size=15) }}
+        {{ form.amount.label }} {{ form.amount(size=10) }}
+        {{ form.paid.label }} {{ form.paid(size=3) }}
+        {{ form.returned.label }} {{ form.returned(size=3) }}
+        <input type="submit" value="Save"> 
 
     </form>
-    {% endif %}
-
 
 </div>
 {% endblock %}

@@ -198,7 +198,7 @@ class ksouravong_vendors(db.Model):
         return "ID: {0} | Order Date: {1} | Booth #: {2} | Company: {3} | Representative: {4} | Phone Number: {5} | Installed On: {6} | Asset #: {7} | Type of Service: {8} | Bill Amount: {9} | Paid? {10} | Returned? {11}".format(self.vendor_id, self.order_date, self.booth_num, self.company, self.rep, self.phone_num, self.installed_date, self.asset_num, self.service, self.amount, self.paid, self.returned)
 
 class VendorOrderForm(FlaskForm):
-    id = IntegerField('Order ID:')
+    id = IntegerField('Order ID:', validators=[DataRequired()])
     order_date = StringField('Order Date:', validators=[DataRequired()])
     booth_num = StringField('Booth #:', validators=[DataRequired()])
     company = StringField('Company:', validators=[DataRequired()])

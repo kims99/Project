@@ -46,7 +46,6 @@
   </form>
 
   <button type="submit" form="user_details" formmethod="POST" formaction="{{ url_for('update_user', user_id=form.id.data) }}" class="btn btn-primary">Update User</button>
-
   <button type="submit" form="user_details" formmethod="POST" formaction="{{ url_for('delete_user', user_id=form.id.data) }}" class="btn btn-danger">Delete User</button>
 
 

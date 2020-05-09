@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 {% block body %}
+<h1>Order Detail</h1>
+<hr />
+{% from "includes/_formhelpers.html" import render_field %}
 <div>
-    <h3>{{ legend }}</h3>
-    <hr />
-    
-    {%if form %}
-    <form method="POST" action="">
+  <form action="" method="POST" id="update_vendor">
+        {{ form.csrf_token }}
+
+        {% if form %}
+
         {{ form.csrf_token }}
         {{ form.id.label }} {{ form.id }}
         {{ form.order_date.label }} {{ form.order_date }}
