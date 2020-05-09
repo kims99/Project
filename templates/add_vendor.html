@@ -105,12 +105,13 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </div>
+
+        <button type="submit" form="add_vendor" formmethod="POST"
+        formaction="{{ url_for('add_vendor') }}" class="btn btn-primary">Add New Order</button>
         
         {% endif %}
     </form>
 
-    <button type="submit" form="add_vendor" formmethod="POST"
-        formaction="{{ url_for('add_vendor') }}" class="btn btn-primary">Add New Order</button>
 
 </div>
 {% endblock %}

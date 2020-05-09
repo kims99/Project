@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from flask_login import LoginManager, UserMixin, current_user, login_user, logout_user, login_required
 from functools import wraps
+from sqlalchemy import or_
 
 import pymysql
 import secrets
@@ -248,6 +249,7 @@ def search():
         search = "%{0}%".format(search_value)
         results = ksouravong_vendors.query.filter(or_(ksouravong_vendors.id.like(search),
                                                 ksouravong_vendors.booth_num.like(search),
+                                                ksouravong_vendors.company.like(search),
                                                 ksouravong_vendors.asset_num.like(search),
                                                 ksouravong_vendors.service.like(search),
                                                 ksouravong_vendors.paid.like(search),
@@ -271,6 +273,7 @@ def add_vendor():
 
 #delete vendor
 @app.route('/delete_vendor/<int:id>', methods=['GET', 'POST'])
+@requires_access_level(ACCESS['admin'])
 def delete_vendor(id):
     if request.method == 'POST':
         vendor = ksouravong_vendors.query.get_or_404(id)
@@ -282,13 +285,13 @@ def delete_vendor(id):
 
 #get vendor
 @app.route('/vendors/<int:id>', methods=['GET', 'POST'])
-@requires_access_level(ACCESS['admin'])
 def get_vendor(id):
     vendor = ksouravong_vendors.query.get_or_404(id)
     return render_template('vendors.html', form=vendor, pageTitle='Order Details', legend="Order Details")
 
 #update vendor
 @app.route('/vendors/<int:id>/update', methods=['GET', 'POST'])
+@requires_access_level(ACCESS['admin'])
 def update_vendor(id):
     vendor = ksouravong_vendors.query.get_or_404(id)
     form = VendorOrderForm()

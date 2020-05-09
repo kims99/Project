@@ -6,7 +6,6 @@
     
     {%if form %}
     <form method="POST" action="">
-
         {{ form.csrf_token }}
         {{ form.id.label }} {{ form.id }}
         {{ form.order_date.label }} {{ form.order_date }}
