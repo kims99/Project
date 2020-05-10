@@ -20,7 +20,7 @@
 
         <div class="form-group">
             <label>{{ form.order_date.label }}</label>
-            {{ form.order_date(class="form-control") }}
+            {{ form.order_date(class="form-control", type="date") }}
             {% for error in form.order_date.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -60,7 +60,7 @@
 
         <div class="form-group">
             <label>{{ form.installed_date.label }}</label>
-            {{ form.installed_date(class="form-control") }}
+            {{ form.installed_date(class="form-control", type="date") }}
             {% for error in form.installed_date.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

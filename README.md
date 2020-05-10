@@ -71,7 +71,7 @@ CREATE TABLE ksouravong_users (
     );
 
 CREATE TABLE ksouravong_vendors (
-    vendor_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    id INT(11) PRIMARY KEY,
     order_date DATE NOT NULL,  
     booth_num VARCHAR(10) NOT NULL,
     company VARCHAR(100) NOT NULL,
@@ -85,5 +85,5 @@ CREATE TABLE ksouravong_vendors (
     returned VARCHAR(5)
     );
 
-INSERT INTO ksouravong_vendors (order_date, booth_num, company, rep, phone_num, installed_date, asset_num, service, amount, paid)
-VALUES ('2020-05-06', 'IA34J', 'Iowa Hawk Shop', 'Ruby Bollinger', '319-111-2222', '2020-06-30', '2341', 'DSL', '350.00', 'Yes');
+INSERT INTO ksouravong_vendors (id, order_date, booth_num, company, rep, phone_num, installed_date, asset_num, service, amount, paid)
+VALUES (1, '2020-05-06', 'IA34J', 'Iowa Hawk Shop', 'Ruby Bollinger', '319-111-2222', '2020-06-30', '2341', 'DSL', '350.00', 'Yes');

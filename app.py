@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField, DateField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from flask_sqlalchemy import SQLAlchemy as _BaseSQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -205,7 +205,7 @@ class VendorOrderForm(FlaskForm):
     rep = StringField('Representative:', validators=[DataRequired()])
     phone_num = StringField('Phone Number:', validators=[DataRequired()])
     installed_date = StringField('Installed On:')
-    asset_num  = IntegerField('Asset #:')
+    asset_num  = StringField('Asset #:')
     service = StringField('Type of Service:', validators=[DataRequired()])
     amount = StringField('Bill Amount:', validators=[DataRequired()])
     paid = StringField('Paid?')
