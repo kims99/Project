@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1 style="text-align: center">User Management</h1>
-
+<hr />
+  <h2 style="text-align: center">User Management</h2>
+<hr />
   <div>
 
     {% if users %}
@@ -15,7 +16,7 @@
                 <th>Username</th>
                 <th>Access Level</th>
                 <th><form action="{{ url_for('new_user') }}" method="GET">
-                  <input type="submit" value="New User" class="btn btn-primary" />
+                  <input type="submit" value="New User" class="btn btn-primary" style="width:200x; font-size: small;"/>
               </form></th>
             </tr>
         </thead>
@@ -46,5 +47,5 @@
     </table>
 {% endif %}
 
-  </div>
+</div>
 {% endblock %}

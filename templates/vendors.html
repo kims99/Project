@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
+<hr />
 <h1>Order Detail</h1>
 <hr />
 {% from "includes/_formhelpers.html" import render_field %}
@@ -74,7 +75,7 @@
 
           <div class="form-group col-md-6">
             <input type="submit" class="btn btn-primary" formaction="{{ url_for('update_vendor', id=form.id) }}" value="Update Order"> 
-            <input type="submit" class="btn btn-primary" formaction="{{ url_for('delete_vendor', id=form.id) }}" value="Delete Order"> 
+            <input type="submit" class="btn btn-danger" formaction="{{ url_for('delete_vendor', id=form.id) }}" value="Delete Order"> 
           </div>
 
     </form>
