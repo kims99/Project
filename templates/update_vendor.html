@@ -1,26 +1,78 @@
 {% extends 'base.html' %}
+
 {% block body %}
+<h2 style="text-align: center">{{ legend }}</h2>
+<hr />
+{% from "includes/_formhelpers.html" import render_field %}
 <div>
-
-    <h2 style="text-align: center">{{ legend }}</h2>
-
-    <form method="POST" action="">
-
+    <form method="POST" action="" id="update_vendor">
         {{ form.csrf_token }}
-        {{ form.id.label }} {{ form.id(size=5, readonly=true) }}
-        {{ form.order_date.label }} {{ form.order_date(size=10, type="date") }}
-        {{ form.booth_num.label }} {{ form.booth_num(size=5) }}
-        {{ form.company.label }} {{ form.company(size=20) }}
-        {{ form.rep.label }} {{ form.rep(size=40) }}
-        {{ form.phone_num.label }} {{ form.phone_num(size=11) }}
-        {{ form.installed_date.label }} {{ form.installed_date(size=10, type="date") }}
-        {{ form.asset_num.label }} {{ form.asset_num(size=5) }}
-        {{ form.service.label }} {{ form.service(size=15) }}
-        {{ form.amount.label }} {{ form.amount(size=10) }}
-        {{ form.paid.label }} {{ form.paid(size=3) }}
-        {{ form.returned.label }} {{ form.returned(size=3) }}
-        <input type="submit" value="Save"> 
 
+        {% if form %}
+
+        <div class="form-group">
+            <label>{{ form.id.label }}</label>
+            {{ form.id(readonly=True, class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.order_date.label }}</label>
+            {{ form.order_date(class="form-control", type="date") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.booth_num.label }}</label>
+            {{ form.booth_num(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.company.label }}</label>
+            {{ form.company(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.rep.label }}</label>
+            {{ form.rep(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.phone_num.label }}</label>
+            {{ form.phone_num(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.installed_date.label }}</label>
+            {{ form.installed_date(class="form-control", type="date") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.asset_num.label }}</label>
+            {{ form.asset_num(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.service.label }}</label>
+            {{ form.service(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.amount.label }}</label>
+            {{ form.amount(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.paid.label }}</label>
+            {{ form.paid(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.returned.label }}</label>
+            {{ form.returned(class="form-control") }}
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Save"> 
+
+        {% endif %}
     </form>
 
 </div>

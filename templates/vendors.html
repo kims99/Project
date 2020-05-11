@@ -1,31 +1,82 @@
 {% extends 'base.html' %}
 {% block body %}
-<h1 style="text-align: center">Order Detail</h1>
+<h1>Order Detail</h1>
 <hr />
 {% from "includes/_formhelpers.html" import render_field %}
 <div>
-  <form action="" method="POST" id="update_vendor">
+  <form action="" method="POST">
         {{ form.csrf_token }}
 
         {% if form %}
+        <fieldset disabled>
 
-        {{ form.csrf_token }}
-        {{ form.id.label }} {{ form.id }}
-        {{ form.order_date.label }} {{ form.order_date }}
-        {{ form.booth_num.label }} {{ form.booth_num }}
-        {{ form.company.label }} {{ form.company }}
-        {{ form.rep.label }} {{ form.rep }}
-        {{ form.phone_num.label }} {{ form.phone_num }}
-        {{ form.installed_date.label }} {{ form.installed_date }}
-        {{ form.asset_num.label }} {{ form.asset_num }}
-        {{ form.service.label }} {{ form.service }}
-        {{ form.amount.label }} {{ form.amount }}
-        {{ form.paid.label }} {{ form.paid }}
-        {{ form.returned.label }} {{ form.returned }}
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Order ID:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.id }}">
+          </div>
 
-        <input type="submit" formaction="{{ url_for('update_vendor', id=form.id) }}" value="Update"> 
-        <input type="submit" formaction="{{ url_for('delete_vendor', id=form.id) }}" value="Delete"> 
-    
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Order Date:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.order_date }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Booth #:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.booth_num }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Company:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.company }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Representative:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.rep }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Phone Number:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.phone_num }}">
+          </div>
+          
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Installed On:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.installed_date }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Asset #:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.asset_num }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Service:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.service }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Bill Amount:</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.amount }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Paid?</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.paid }}">
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="disabledTextInput">Returned?</label>
+            <input type="text" id="disabledTextInput" class="form-control mx-sm-3" value="{{ form.returned }}">
+          </div>
+  
+      </fieldset>
+
+          <div class="form-group col-md-6">
+            <input type="submit" class="btn btn-primary" formaction="{{ url_for('update_vendor', id=form.id) }}" value="Update Order"> 
+            <input type="submit" class="btn btn-primary" formaction="{{ url_for('delete_vendor', id=form.id) }}" value="Delete Order"> 
+          </div>
+
     </form>
     {% endif %}
 
