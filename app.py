@@ -222,13 +222,6 @@ def index():
     all_vendors = ksouravong_vendors.query.all()
     return render_template('index.html', vendors=all_vendors, pageTitle='Vendor Order Information')
 
-# edit order
-@app.route('/edit_orders')
-@requires_access_level(ACCESS['admin'])
-def edit_orders():
-    all_vendors = ksouravong_vendors.query.all()
-    return render_template('edit_orders.html', vendors=all_vendors, pageTitle='Edit Order')
-
 # about
 @app.route('/about')
 def about():
@@ -271,61 +264,11 @@ def add_vendor():
 
     return render_template('add_vendor.html', form=form, pageTitle='Add New Order')
 
-#delete vendor
-@app.route('/delete_vendor/<int:id>', methods=['GET', 'POST'])
-@requires_access_level(ACCESS['admin'])
-def delete_vendor(id):
-    if request.method == 'POST':
-        vendor = ksouravong_vendors.query.get_or_404(id)
-        db.session.delete(vendor)
-        db.session.commit()
-        return redirect("/")
-    else:
-        return redirect("/")
-
 #get vendor
 @app.route('/vendors/<int:id>', methods=['GET', 'POST'])
 def get_vendor(id):
     vendor = ksouravong_vendors.query.get_or_404(id)
     return render_template('vendors.html', form=vendor, pageTitle='Order Details', legend="Order Details")
-
-#update vendor
-@app.route('/vendors/<int:id>/update', methods=['GET', 'POST'])
-@requires_access_level(ACCESS['admin'])
-def update_vendor(id):
-    vendor = ksouravong_vendors.query.get_or_404(id)
-    form = VendorOrderForm()
-
-    if form.validate_on_submit():
-        vendor.id = form.id.data
-        vendor.order_date = form.order_date.data
-        vendor.booth_num = form.booth_num.data
-        vendor.company = form.company.data
-        vendor.rep = form.rep.data
-        vendor.phone_num = form.phone_num.data
-        vendor.installed_date = form.installed_date.data
-        vendor.asset_num = form.asset_num.data
-        vendor.service = form.service.data
-        vendor.amount = form.amount.data
-        vendor.paid = form.paid.data
-        vendor.returned = form.returned.data
-        db.session.commit()
-        return redirect(url_for('get_vendor', id=vendor.id))
-
-    form.id.data = vendor.id
-    form.order_date.data = vendor.order_date
-    form.booth_num.data = vendor.booth_num 
-    form.company.data = vendor.company 
-    form.rep.data = vendor.rep 
-    form.phone_num.data = vendor.phone_num  
-    form.installed_date.data = vendor.installed_date 
-    form.asset_num.data = vendor.asset_num  
-    form.service.data = vendor.service 
-    form.amount.data = vendor.amount 
-    form.paid.data = vendor.paid 
-    form.returned.data = vendor.returned  
-    return render_template('update_vendor.html', form=form, pageTitle='Update Order', legend="Update An Order")
-
 
 # registration
 @app.route('/register', methods=['GET', 'POST'])
@@ -481,6 +424,62 @@ def new_user():
         return redirect(url_for('login'))
 
     return render_template('new_user.html',  pageTitle='New User | My Flask App', form=form)
+
+#update vendor
+@app.route('/vendors/<int:id>/update', methods=['GET', 'POST'])
+@requires_access_level(ACCESS['admin'])
+def update_vendor(id):
+    vendor = ksouravong_vendors.query.get_or_404(id)
+    form = VendorOrderForm()
+
+    if form.validate_on_submit():
+        vendor.id = form.id.data
+        vendor.order_date = form.order_date.data
+        vendor.booth_num = form.booth_num.data
+        vendor.company = form.company.data
+        vendor.rep = form.rep.data
+        vendor.phone_num = form.phone_num.data
+        vendor.installed_date = form.installed_date.data
+        vendor.asset_num = form.asset_num.data
+        vendor.service = form.service.data
+        vendor.amount = form.amount.data
+        vendor.paid = form.paid.data
+        vendor.returned = form.returned.data
+        db.session.commit()
+        return redirect(url_for('get_vendor', id=vendor.id))
+
+    form.id.data = vendor.id
+    form.order_date.data = vendor.order_date
+    form.booth_num.data = vendor.booth_num 
+    form.company.data = vendor.company 
+    form.rep.data = vendor.rep 
+    form.phone_num.data = vendor.phone_num  
+    form.installed_date.data = vendor.installed_date 
+    form.asset_num.data = vendor.asset_num  
+    form.service.data = vendor.service 
+    form.amount.data = vendor.amount 
+    form.paid.data = vendor.paid 
+    form.returned.data = vendor.returned  
+    return render_template('update_vendor.html', form=form, pageTitle='Update Order', legend="Update An Order")
+
+#delete vendor
+@app.route('/delete_vendor/<int:id>', methods=['GET', 'POST'])
+@requires_access_level(ACCESS['admin'])
+def delete_vendor(id):
+    if request.method == 'POST':
+        vendor = ksouravong_vendors.query.get_or_404(id)
+        db.session.delete(vendor)
+        db.session.commit()
+        return redirect("/")
+    else:
+        return redirect("/")
+
+# edit order
+@app.route('/edit_orders')
+@requires_access_level(ACCESS['admin'])
+def edit_orders():
+    all_vendors = ksouravong_vendors.query.all()
+    return render_template('edit_orders.html', vendors=all_vendors, pageTitle='Edit Order')
 
 
 

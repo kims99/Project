@@ -19,6 +19,9 @@ The 'About' section describes what the purpose of this database is about and wha
 
 When you log in, you are an admin and have the capabilities to add, update, or delete a row from the database.  As an admin, you have three additional pages that the unauthenticated user would not be able to see. 
 
+Admin Login: Admin
+Password: 1233456
+
 There is an 'Edit Orders' page where you can add a new order or view the specific details of a vendor's order.  When you click on the 'Details' button, you see the what the unautheneticated user would see. However, the only difference is when you click on 'Update' or 'Delete', you are able to perform any updates to the information or remove it completely.
 
 'User Management' is where you can see all the admins who have the privilege to make these kinds of changes.  You can add a new user in this page or you can click on 'Details' and make any changes to their account or remove them as an admin. 
